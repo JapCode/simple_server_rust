@@ -1,5 +1,5 @@
 # Usamos una imagen oficial de Rust para construir el binario
-FROM rust:1.65 as builder
+FROM rust:1.78 as builder
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app
