@@ -14,11 +14,13 @@ async fn print_message(payload: web::Json<MyPayload>) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
+    let server = HttpServer::new(|| {
         App::new()
             .service(print_message)
     })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
+    .bind("0.0.0.0:3006")?
+    .run();
+    println!("Server started at http://0.0.0.0:3006");
+
+    server.await
 }

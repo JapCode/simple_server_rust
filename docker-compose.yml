@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  app:
+    image: simple_server:latest
+    ports:
+      - "3006:3006"
+    environment:
+      SERVER_PORT: 3006
+      RUST_LOG: debug
+      LOG_FORMAT: json
