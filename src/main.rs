@@ -1,5 +1,6 @@
 use actix_web::{post, web, App, HttpServer, Responder};
 use serde::Deserialize;
+use std::env;
 
 #[derive(Deserialize)]
 struct MyPayload {
@@ -14,13 +15,17 @@ async fn print_message(payload: web::Json<MyPayload>) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let server = HttpServer::new(|| {
+    // Obtener el puerto de la variable de entorno o usar 3006 como predeterminado
+    let port = env::var("PORT").unwrap_or_else(|_| "3006".to_string());
+    let addr = format!("0.0.0.0:{}", port);
+
+    println!("Starting server at {}", addr);
+
+    HttpServer::new(|| {
         App::new()
             .service(print_message)
     })
-    .bind("0.0.0.0:3006")?
-    .run();
-    println!("Server started at http://0.0.0.0:3006");
-
-    server.await
+    .bind(addr)?
+    .run()
+    .await
 }
